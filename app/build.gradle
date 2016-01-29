@@ -20,6 +20,12 @@ android {
         }
     }
 
+    productFlavors {
+        prod {
+            buildConfigField 'String', 'ENDPOINT', '"http://api.example.com"'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
