@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 
+import butterknife.ButterKnife;
 import pl.misztal.template.injection.component.DaggerFragmentComponent;
 import pl.misztal.template.injection.component.FragmentComponent;
 import pl.misztal.template.injection.module.FragmentModule;
@@ -28,6 +29,12 @@ public abstract class BaseFragment extends Fragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             onAttachToContext(activity);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     protected void inject() {
