@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import pl.misztal.template.presenter.activity.BasePresenter;
 
-public abstract class BasePresenterActivity<PRESENTER extends BasePresenter> extends BaseActivity {
+public abstract class BasePresenterActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,5 +24,5 @@ public abstract class BasePresenterActivity<PRESENTER extends BasePresenter> ext
         super.onDestroy();
     }
 
-    protected abstract PRESENTER getPresenter();
+    protected abstract BasePresenter getPresenter();
 }

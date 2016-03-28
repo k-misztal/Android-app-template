@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import pl.misztal.template.presenter.fragment.BasePresenter;
 
-public abstract class BasePresenterFragment<PRESENTER extends BasePresenter> extends BaseFragment {
+public abstract class BasePresenterFragment extends BaseFragment {
 
     @Override
     protected void onAttachToContext(Context context) {
@@ -31,5 +31,5 @@ public abstract class BasePresenterFragment<PRESENTER extends BasePresenter> ext
         super.onSaveInstanceState(outState);
     }
 
-    protected abstract PRESENTER getPresenter();
+    protected abstract BasePresenter getPresenter();
 }

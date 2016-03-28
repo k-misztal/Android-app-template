@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import pl.misztal.template.ui.activity.BasePresenterActivity;
 
-public class BasePresenter<ACTIVITY extends BasePresenterActivity> {
-    private ACTIVITY activity;
+public class BasePresenter {
+    private BasePresenterActivity activity;
 
     public BasePresenter() {
     }
@@ -14,7 +14,7 @@ public class BasePresenter<ACTIVITY extends BasePresenterActivity> {
 
     }
 
-    public void onAttach(ACTIVITY activity) {
+    public void onAttach(BasePresenterActivity activity) {
         this.activity = activity;
     }
 
@@ -26,7 +26,7 @@ public class BasePresenter<ACTIVITY extends BasePresenterActivity> {
 
     }
 
-    protected ACTIVITY getActivity() {
+    protected BasePresenterActivity getActivity() {
         return activity;
     }
 }

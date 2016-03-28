@@ -4,13 +4,13 @@ import android.os.Bundle;
 
 import pl.misztal.template.ui.fragment.BasePresenterFragment;
 
-public class BasePresenter<FRAGMENT extends BasePresenterFragment> {
-    private FRAGMENT fragment;
+public class BasePresenter {
+    private BasePresenterFragment fragment;
 
     public void onCreate(Bundle savedInstanceState) {
     }
 
-    public void onAttach(FRAGMENT fragment) {
+    public void onAttach(BasePresenterFragment fragment) {
         this.fragment = fragment;
     }
 
@@ -21,7 +21,7 @@ public class BasePresenter<FRAGMENT extends BasePresenterFragment> {
     public void onSaveInstanceState(Bundle outState) {
     }
 
-    protected FRAGMENT getFragment() {
+    protected BasePresenterFragment getFragment() {
         return fragment;
     }
 }
