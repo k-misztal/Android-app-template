@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import pl.misztal.template.ui.activity.BasePresenterActivity;
 
-public class BasePresenter {
+public class BasePresenter<CALLBACKS> {
     private BasePresenterActivity activity;
+    private CALLBACKS callbacks;
 
     public BasePresenter() {
     }
@@ -14,8 +15,10 @@ public class BasePresenter {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void onAttach(BasePresenterActivity activity) {
         this.activity = activity;
+        this.callbacks = (CALLBACKS) activity;
     }
 
     public void onDetach() {
@@ -28,5 +31,9 @@ public class BasePresenter {
 
     protected BasePresenterActivity getActivity() {
         return activity;
+    }
+
+    protected CALLBACKS getCallbacks() {
+        return callbacks;
     }
 }

@@ -4,14 +4,17 @@ import android.os.Bundle;
 
 import pl.misztal.template.ui.fragment.BasePresenterFragment;
 
-public class BasePresenter {
+public class BasePresenter<CALLBACKS> {
     private BasePresenterFragment fragment;
+    private CALLBACKS callbacks;
 
     public void onCreate(Bundle savedInstanceState) {
     }
 
+    @SuppressWarnings("unchecked")
     public void onAttach(BasePresenterFragment fragment) {
         this.fragment = fragment;
+        this.callbacks = (CALLBACKS) fragment;
     }
 
     public void onDetach() {
@@ -23,5 +26,9 @@ public class BasePresenter {
 
     protected BasePresenterFragment getFragment() {
         return fragment;
+    }
+
+    protected CALLBACKS getCallbacks() {
+        return callbacks;
     }
 }
