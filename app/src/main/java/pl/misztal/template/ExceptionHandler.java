@@ -11,7 +11,7 @@ public class ExceptionHandler {
     Context context;
 
     @Inject
-    public ExceptionHandler(Context activity) {
+    public ExceptionHandler(Context context) {
         this.context = context;
     }
 
