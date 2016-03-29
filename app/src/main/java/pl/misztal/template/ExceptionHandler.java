@@ -1,30 +1,22 @@
 package pl.misztal.template;
 
-import android.os.Handler;
+import android.content.Context;
 
 import javax.inject.Inject;
 
-import pl.misztal.template.injection.scope.PerActivity;
-import pl.misztal.template.model.DataManager;
-import pl.misztal.template.ui.activity.BaseActivity;
+import pl.misztal.template.dagger.scope.PerApplication;
 
-@PerActivity
+@PerApplication
 public class ExceptionHandler {
-    BaseActivity activity;
-    DataManager dataManager;
+    Context context;
 
     @Inject
-    public ExceptionHandler(BaseActivity activity, DataManager dataManager) {
-        this.activity = activity;
-        this.dataManager = dataManager;
+    public ExceptionHandler(Context activity) {
+        this.context = context;
     }
 
-    public void onException(final Throwable e) {
-        Handler handler = new Handler(activity.getMainLooper());
-        handler.post(() -> handleException(e));
+    public String getMessageError(Throwable throwable) {
+        return null;
     }
 
-    private void handleException(Throwable t) {
-
-    }
 }

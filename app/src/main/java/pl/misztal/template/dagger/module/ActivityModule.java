@@ -1,12 +1,10 @@
-package pl.misztal.template.injection.module;
+package pl.misztal.template.dagger.module;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 
 import dagger.Module;
 import dagger.Provides;
-import pl.misztal.template.injection.scope.PerActivity;
+import pl.misztal.template.dagger.scope.PerActivity;
 import pl.misztal.template.ui.activity.BaseActivity;
 
 @Module

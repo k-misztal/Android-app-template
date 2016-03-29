@@ -1,10 +1,10 @@
-package pl.misztal.template.injection.module;
+package pl.misztal.template.dagger.module;
 
 import android.support.v4.app.FragmentManager;
 
 import dagger.Module;
 import dagger.Provides;
-import pl.misztal.template.injection.scope.PerFragment;
+import pl.misztal.template.dagger.scope.PerFragment;
 import pl.misztal.template.ui.fragment.BaseFragment;
 
 @Module

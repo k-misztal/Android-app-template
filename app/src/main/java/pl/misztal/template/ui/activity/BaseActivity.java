@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import pl.misztal.template.App;
-import pl.misztal.template.injection.component.ActivityComponent;
-import pl.misztal.template.injection.component.DaggerActivityComponent;
-import pl.misztal.template.injection.module.ActivityModule;
+import pl.misztal.template.dagger.component.ActivityComponent;
+import pl.misztal.template.dagger.component.DaggerActivityComponent;
+import pl.misztal.template.dagger.module.ActivityModule;
+import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private ActivityComponent component;
@@ -51,6 +52,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void hideLoadingDialog() {
+        //TODO
+    }
+
+    public void showErrorMessage(String message) {
+        Timber.e("Showing message not implemented yet...");
         //TODO
     }
 }

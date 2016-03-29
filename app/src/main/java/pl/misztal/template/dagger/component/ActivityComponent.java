@@ -1,12 +1,12 @@
-package pl.misztal.template.injection.component;
+package pl.misztal.template.dagger.component;
 
 import android.content.Context;
 
 import dagger.Component;
 import pl.misztal.template.App;
 import pl.misztal.template.ExceptionHandler;
-import pl.misztal.template.injection.module.ActivityModule;
-import pl.misztal.template.injection.scope.PerActivity;
+import pl.misztal.template.dagger.module.ActivityModule;
+import pl.misztal.template.dagger.scope.PerActivity;
 import pl.misztal.template.model.DataManager;
 import pl.misztal.template.ui.activity.BaseActivity;
 

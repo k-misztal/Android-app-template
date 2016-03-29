@@ -2,9 +2,9 @@ package pl.misztal.template;
 
 import android.app.Application;
 
-import pl.misztal.template.injection.component.ApplicationComponent;
-import pl.misztal.template.injection.component.DaggerApplicationComponent;
-import pl.misztal.template.injection.module.ApplicationModule;
+import pl.misztal.template.dagger.component.ApplicationComponent;
+import pl.misztal.template.dagger.component.DaggerApplicationComponent;
+import pl.misztal.template.dagger.module.ApplicationModule;
 import timber.log.Timber;
 
 public class App extends Application {

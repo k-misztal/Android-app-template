@@ -7,9 +7,9 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 
 import butterknife.ButterKnife;
-import pl.misztal.template.injection.component.DaggerFragmentComponent;
-import pl.misztal.template.injection.component.FragmentComponent;
-import pl.misztal.template.injection.module.FragmentModule;
+import pl.misztal.template.dagger.component.DaggerFragmentComponent;
+import pl.misztal.template.dagger.component.FragmentComponent;
+import pl.misztal.template.dagger.module.FragmentModule;
 import pl.misztal.template.ui.activity.BaseActivity;
 
 public abstract class BaseFragment extends Fragment {
@@ -55,6 +55,10 @@ public abstract class BaseFragment extends Fragment {
     protected void onAttachToContext(Context context) {
         initDagger();
         inject();
+    }
+
+    public void showErorMessage(String message) {
+        ((BaseActivity) getActivity()).showErrorMessage(message);
     }
 
     public void showLoadingDialog(int titleResId, int messageResId) {
