@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import timber.log.Timber;
 
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public static final String DATABASE_NAME = "babbler.db";
     public static final int DATABASE_VERSION = 1;
 
