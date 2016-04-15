@@ -3,9 +3,9 @@ package pl.misztal.template.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
-import pl.misztal.template.presenter.fragment.BasePresenter;
+import pl.misztal.template.presenter.BasePresenter;
 
-public abstract class BasePresenterFragment extends BaseFragment {
+public abstract class BasePresenterFragment extends BaseFragment implements BasePresenter.Callbacks {
 
     @Override
     protected void onAttachToContext(Context context) {
@@ -29,6 +29,11 @@ public abstract class BasePresenterFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         getPresenter().onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void showError(String message) {
+        showErorMessage(message);
     }
 
     protected abstract BasePresenter getPresenter();

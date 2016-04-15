@@ -2,7 +2,7 @@ package pl.misztal.template.model.database.model;
 
 import com.j256.ormlite.field.DatabaseField;
 
-public class BaseTable {
+public abstract class BaseTable {
     public static final String COLUMN_ID = "_id";
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID)
