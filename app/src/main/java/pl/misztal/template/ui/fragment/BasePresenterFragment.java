@@ -33,7 +33,7 @@ public abstract class BasePresenterFragment extends BaseFragment implements Base
 
     @Override
     public void showError(String message) {
-        showErorMessage(message);
+        showErrorMessage(message);
     }
 
     protected abstract BasePresenter getPresenter();

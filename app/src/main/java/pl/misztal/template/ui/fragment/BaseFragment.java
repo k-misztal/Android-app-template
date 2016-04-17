@@ -57,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
         inject();
     }
 
-    public void showErorMessage(String message) {
+    public void showErrorMessage(String message) {
         ((BaseActivity) getActivity()).showErrorMessage(message);
     }
 

@@ -3,7 +3,7 @@ package pl.misztal.template.presenter;
 
 import android.os.Bundle;
 
-public abstract class BasePresenter<CALLBACKS extends BasePresenter.Callbacks> {
+public abstract class BasePresenter<CALLBACKS extends Callbacks> {
     private CALLBACKS callbacks;
 
     public BasePresenter() {
@@ -28,9 +28,5 @@ public abstract class BasePresenter<CALLBACKS extends BasePresenter.Callbacks> {
 
     protected CALLBACKS getCallbacks() {
         return callbacks;
-    }
-
-    public interface Callbacks {
-        void showError(String message);
     }
 }
