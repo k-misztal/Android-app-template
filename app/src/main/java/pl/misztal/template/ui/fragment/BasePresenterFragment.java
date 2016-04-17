@@ -4,8 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import pl.misztal.template.presenter.BasePresenter;
+import pl.misztal.template.presenter.Callbacks;
 
-public abstract class BasePresenterFragment extends BaseFragment implements BasePresenter.Callbacks {
+public abstract class BasePresenterFragment extends BaseFragment implements Callbacks {
 
     @Override
     protected void onAttachToContext(Context context) {

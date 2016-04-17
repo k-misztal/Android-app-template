@@ -3,8 +3,9 @@ package pl.misztal.template.ui.activity;
 import android.os.Bundle;
 
 import pl.misztal.template.presenter.BasePresenter;
+import pl.misztal.template.presenter.Callbacks;
 
-public abstract class BasePresenterActivity extends BaseActivity implements BasePresenter.Callbacks{
+public abstract class BasePresenterActivity extends BaseActivity implements Callbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
