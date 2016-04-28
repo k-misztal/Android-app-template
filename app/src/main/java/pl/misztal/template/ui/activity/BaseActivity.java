@@ -1,22 +1,30 @@
 package pl.misztal.template.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import pl.misztal.template.App;
 import pl.misztal.template.dagger.component.ActivityComponent;
 import pl.misztal.template.dagger.component.DaggerActivityComponent;
 import pl.misztal.template.dagger.module.ActivityModule;
-import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private ActivityComponent component;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initializeInjector();
         super.onCreate(savedInstanceState);
         inject();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
     }
 
     @Override
@@ -47,16 +55,24 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .build();
     }
 
-    public void showLoadingDialog(String title, String message) {
-        //TODO
+    public void showProgressDialog(int titleRes, int messageRes) {
+        showProgressDialog(getString(titleRes), getString(messageRes));
     }
 
-    public void hideLoadingDialog() {
-        //TODO
+    public void showProgressDialog(String title, String message) {
+        dismissProgressDialog();
+        progressDialog = ProgressDialog.show(this, title, message);
+    }
+
+    public void dismissProgressDialog() {
+        if (progressDialog != null)
+            progressDialog.dismiss();
+
+        progressDialog = null;
     }
 
     public void showErrorMessage(String message) {
-        Timber.e("Showing message not implemented yet...");
-        //TODO
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        // TODO: 28.04.2016
     }
 }

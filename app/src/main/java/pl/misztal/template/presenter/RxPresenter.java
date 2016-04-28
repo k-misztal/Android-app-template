@@ -6,7 +6,7 @@ import java.util.List;
 
 import rx.Subscription;
 
-public abstract class RxPresenter<CALLBACKS extends BasePresenter.Callbacks> extends BasePresenter<CALLBACKS> {
+public abstract class RxPresenter<CALLBACKS extends Callbacks> extends BasePresenter<CALLBACKS> {
 
     private List<Subscription> subscriptions = new ArrayList<>(5);
 
