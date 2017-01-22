@@ -2,6 +2,8 @@ package pl.misztal.template;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import pl.misztal.template.dagger.component.ApplicationComponent;
 import pl.misztal.template.dagger.component.DaggerApplicationComponent;
 import pl.misztal.template.dagger.module.ApplicationModule;
@@ -12,9 +14,16 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+
         initializeDagger();
         super.onCreate();
         initializeTimber();
+        LeakCanary.install(this);
     }
 
     private void initializeTimber() {
