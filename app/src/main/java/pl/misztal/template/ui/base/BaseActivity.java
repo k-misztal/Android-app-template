@@ -1,18 +1,23 @@
-package pl.misztal.template.ui.activity;
+package pl.misztal.template.ui.base;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
+import com.hannesdorfmann.mosby.mvp.MvpView;
+
 import pl.misztal.template.App;
+import pl.misztal.template.ExceptionHandler;
 import pl.misztal.template.dagger.component.ActivityComponent;
 import pl.misztal.template.dagger.component.DaggerActivityComponent;
 import pl.misztal.template.dagger.module.ActivityModule;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>> extends MvpActivity<V, P> {
     private ActivityComponent component;
     ProgressDialog progressDialog;
+
+    protected ExceptionHandler exceptionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void inject() {
-        // no injection by default in activities
+        exceptionHandler = getComponent().exceptionHandler();
     }
 
     public ActivityComponent getComponent() {
@@ -71,8 +76,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         progressDialog = null;
     }
 
-    public void showErrorMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        // TODO: 28.04.2016
+    public void showError(Throwable e, boolean pullToRefresh) {
+        String messageError = exceptionHandler.getMessageError(e);
+        Toast.makeText(this, messageError, Toast.LENGTH_SHORT).show();
+
+        // TODO: 22.01.2017
     }
 }
