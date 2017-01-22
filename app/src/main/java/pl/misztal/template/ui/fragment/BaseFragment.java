@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import pl.misztal.template.dagger.component.DaggerFragmentComponent;
 import pl.misztal.template.dagger.component.FragmentComponent;
 import pl.misztal.template.dagger.module.FragmentModule;
@@ -14,6 +16,7 @@ import pl.misztal.template.ui.activity.BaseActivity;
 
 public abstract class BaseFragment extends Fragment {
     private FragmentComponent fragmentComponent;
+    protected Unbinder unbinder;
 
     @TargetApi(23)
     @Override
@@ -33,8 +36,15 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+
         super.onDestroyView();
-        ButterKnife.unbind(this);
+    }
+
+    private void bind(View view) {
+        unbinder = ButterKnife.bind(this, view);
     }
 
     protected void inject() {
