@@ -1,6 +1,7 @@
 package pl.misztal.template.di.module.provider;
 
 import com.google.gson.Gson;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -9,7 +10,6 @@ import okhttp3.OkHttpClient;
 import pl.misztal.template.BuildConfig;
 import pl.misztal.template.model.api.RestService;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestServiceProvider implements Provider<RestService> {
@@ -30,7 +30,7 @@ public class RestServiceProvider implements Provider<RestService> {
                 .baseUrl(BuildConfig.ENDPOINT)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         return retrofit.create(RestService.class);
