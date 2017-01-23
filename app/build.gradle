@@ -23,12 +23,30 @@ android {
 
         setProperty("archivesBaseName", applicationName + "_$versionName")
         vectorDrawables.useSupportLibrary = true
+
+        signingConfigs {
+            debugConfig {
+                storeFile file("debug.jks")
+                storePassword "android"
+                keyAlias "alias"
+                keyPassword "android"
+            }
+
+            productionConfig {
+                storeFile file("release.jks")
+                storePassword "pass"
+                keyAlias "alias"
+                keyPassword "pass"
+            }
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.productionConfig
         }
     }
 
