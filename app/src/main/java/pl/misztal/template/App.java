@@ -6,7 +6,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import pl.misztal.template.dagger.component.ApplicationComponent;
 import pl.misztal.template.dagger.component.DaggerApplicationComponent;
-import pl.misztal.template.dagger.module.ApplicationModule;
+import pl.misztal.template.dagger.module.NetworkModule;
 import timber.log.Timber;
 
 public class App extends Application {
@@ -34,7 +34,7 @@ public class App extends Application {
 
     private void initializeDagger() {
         component = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+                .applicationModule(new NetworkModule(this))
                 .build();
     }
 
