@@ -33,6 +33,7 @@ public class App extends Application {
         initializeToothpick();
         initializeTimber();
         LeakCanary.install(this);
+        // TODO: Add Crashlytics!
     }
 
     private void initializeToothpick() {

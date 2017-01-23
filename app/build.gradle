@@ -20,6 +20,9 @@ android {
                 arguments = [ toothpick_registry_package_name : applicationId ]
             }
         }
+
+        setProperty("archivesBaseName", applicationName + "_$versionName")
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
