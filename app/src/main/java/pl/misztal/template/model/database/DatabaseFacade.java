@@ -1,22 +1,24 @@
 package pl.misztal.template.model.database;
 
-import android.content.Context;
-
 import javax.inject.Inject;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import pl.misztal.template.dagger.scope.PerApplication;
 
 @PerApplication
 public class DatabaseFacade {
 
-    final DatabaseHelper helper;
+    private final Realm realm;
 
     @Inject
-    public DatabaseFacade(Context context) {
-        helper = new DatabaseHelper(context);
+    public DatabaseFacade() {
+        RealmConfiguration config = RealmHelper.getDefaultRealmConfig();
+        realm = Realm.getInstance(config);
     }
 
 
-    //TODO remember about reactive model - return observables !
+    // TODO remember about reactive model - return observables, or better Single
+    // For void operations return Completable !
 
 }

@@ -34,7 +34,7 @@ public class App extends Application {
 
     private void initializeDagger() {
         component = DaggerApplicationComponent.builder()
-                .applicationModule(new NetworkModule(this))
+                .networkModule(new NetworkModule(this))
                 .build();
     }
 
