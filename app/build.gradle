@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'realm-android'
+apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 25
@@ -37,6 +38,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    jacocoAndroidUnitTestReport {
+        excludes += ['**/*Factory.class']
     }
 }
 
