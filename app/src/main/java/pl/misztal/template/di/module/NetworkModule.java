@@ -3,8 +3,8 @@ package pl.misztal.template.di.module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import pl.misztal.template.BuildConfig;
 import pl.misztal.template.di.module.provider.RestServiceProvider;
 import pl.misztal.template.model.api.RestService;
@@ -20,9 +20,18 @@ public class NetworkModule extends Module {
 
 
     OkHttpClient provideOkHttpClient() {
-        return new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor())
-                .build();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        if (BuildConfig.DEBUG) {
+            try {
+                final Interceptor interceptor = (Interceptor) Class.forName("com.facebook.stetho.okhttp3.StethoInterceptor").newInstance();
+                builder.addNetworkInterceptor(interceptor);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return builder.build();
     }
 
     Gson provideGson() {
@@ -32,14 +41,4 @@ public class NetworkModule extends Module {
         return builder.create();
     }
 
-    private static HttpLoggingInterceptor loggingInterceptor() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-
-        if (BuildConfig.DEBUG)
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        else
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-
-        return loggingInterceptor;
-    }
 }
