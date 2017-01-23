@@ -3,10 +3,9 @@ package pl.misztal.template;
 import android.content.Context;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import pl.misztal.template.dagger.scope.PerApplication;
-
-@PerApplication
+@Singleton
 public class ExceptionHandler {
     Context context;
 

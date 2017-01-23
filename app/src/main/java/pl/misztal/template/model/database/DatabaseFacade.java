@@ -1,12 +1,12 @@
 package pl.misztal.template.model.database;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import pl.misztal.template.dagger.scope.PerApplication;
 
-@PerApplication
+@Singleton
 public class DatabaseFacade {
 
     private final Realm realm;

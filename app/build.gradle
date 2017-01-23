@@ -13,6 +13,12 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "0.1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ toothpick_registry_package_name : applicationId ]
+            }
+        }
     }
 
     buildTypes {
@@ -57,9 +63,15 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'javax.inject:javax.inject:1'
     compile 'javax.annotation:javax.annotation-api:1.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.0' //todo toothpick
-    compile 'com.google.dagger:dagger:2.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
+
+    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.0.3'
+    compile 'com.github.stephanenicolas.toothpick:smoothie:1.0.3'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.3'
+    testCompile 'com.github.stephanenicolas.toothpick:toothpick-testing:1.0.3'
+
+    //todo jacoco
+    //todo stetho
 }

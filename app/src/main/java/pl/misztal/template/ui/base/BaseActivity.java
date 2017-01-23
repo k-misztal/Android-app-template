@@ -7,17 +7,17 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
-import pl.misztal.template.App;
 import pl.misztal.template.ExceptionHandler;
-import pl.misztal.template.dagger.component.ActivityComponent;
-import pl.misztal.template.dagger.component.DaggerActivityComponent;
-import pl.misztal.template.dagger.module.ActivityModule;
+import pl.misztal.template.di.scope.ActivitySingleton;
+import toothpick.Scope;
+import toothpick.Toothpick;
+import toothpick.smoothie.module.SmoothieSupportActivityModule;
 
 public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>> extends MvpActivity<V, P> {
-    private ActivityComponent component;
     ProgressDialog progressDialog;
 
     protected ExceptionHandler exceptionHandler;
+    protected Scope scope;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,7 @@ public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>
     @Override
     protected void onDestroy() {
         dismissProgressDialog();
+        Toothpick.closeScope(this);
         super.onDestroy();
     }
 
@@ -41,23 +42,13 @@ public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>
     }
 
     protected void inject() {
-        exceptionHandler = getComponent().exceptionHandler();
-    }
-
-    public ActivityComponent getComponent() {
-        return component;
-    }
-
-    protected ActivityModule getActivityModule() {
-        return new ActivityModule(this);
+        Toothpick.inject(this, scope);
     }
 
     private void initializeInjector() {
-        if (component == null)
-            component = DaggerActivityComponent.builder()
-                    .applicationComponent(App.getComponent())
-                    .activityModule(getActivityModule())
-                    .build();
+        scope = Toothpick.openScopes(getApplication(), this);
+        scope.installModules(new SmoothieSupportActivityModule(this));
+        scope.bindScopeAnnotation(ActivitySingleton.class);
     }
 
     public void showProgressDialog(int titleRes, int messageRes) {

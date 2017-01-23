@@ -1,12 +1,12 @@
 package pl.misztal.template.model;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import pl.misztal.template.dagger.scope.PerApplication;
 import pl.misztal.template.model.api.RestService;
 import pl.misztal.template.model.database.DatabaseFacade;
 
-@PerApplication
+@Singleton
 public class DataManager {
 
     private DatabaseFacade databaseFacade;

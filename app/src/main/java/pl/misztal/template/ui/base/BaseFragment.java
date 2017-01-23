@@ -1,18 +1,25 @@
 package pl.misztal.template.ui.base;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import butterknife.Unbinder;
-import pl.misztal.template.dagger.component.DaggerFragmentComponent;
-import pl.misztal.template.dagger.component.FragmentComponent;
-import pl.misztal.template.dagger.module.FragmentModule;
+import pl.misztal.template.di.scope.FragmentSingleton;
+import toothpick.Scope;
+import toothpick.Toothpick;
 
 public abstract class BaseFragment<V extends MvpView, P extends BasePresenter<V>> extends MvpFragment<V, P> {
-    private FragmentComponent fragmentComponent;
+    private Scope scope;
     protected Unbinder unbinder;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        initToothpick();
+        inject();
+    }
 
     @Override
     public void onDestroyView() {
@@ -24,23 +31,12 @@ public abstract class BaseFragment<V extends MvpView, P extends BasePresenter<V>
     }
 
     protected void inject() {
-        //no injection by default
+        Toothpick.inject(this, scope);
     }
 
-    private void initDagger() {
-        fragmentComponent = DaggerFragmentComponent.builder()
-                .activityComponent(((BaseActivity) getActivity()).getComponent())
-                .fragmentModule(new FragmentModule(this))
-                .build();
-    }
-
-    public final FragmentComponent getComponent() {
-        return fragmentComponent;
-    }
-
-    protected void onAttachToContext(Context context) {
-        initDagger();
-        inject();
+    private void initToothpick() {
+        scope = Toothpick.openScopes(getActivity().getApplication(), this);
+        scope.bindScopeAnnotation(FragmentSingleton.class);
     }
 
     public void showError(Throwable e, boolean pullToRefresh) {
