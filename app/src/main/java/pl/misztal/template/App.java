@@ -6,6 +6,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import pl.misztal.template.di.module.DataModule;
 import pl.misztal.template.di.module.NetworkModule;
+import pl.misztal.template.di.module.SchedulerModule;
 import timber.log.Timber;
 import toothpick.Scope;
 import toothpick.Toothpick;
@@ -43,7 +44,7 @@ public class App extends Application {
 
         scope = Toothpick.openScope(this);
         scope.installModules(new SmoothieApplicationModule(this),
-                new NetworkModule(), new DataModule());
+                new NetworkModule(), new DataModule(), new SchedulerModule());
     }
 
     private void initializeTimber() {
