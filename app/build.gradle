@@ -6,7 +6,7 @@ apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "pl.misztal.template"
@@ -69,8 +69,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
     compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
@@ -90,10 +90,10 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
 
-    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.0.3'
-    compile 'com.github.stephanenicolas.toothpick:smoothie:1.0.3'
-    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.3'
-    testCompile 'com.github.stephanenicolas.toothpick:toothpick-testing:1.0.3'
+    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.0.6'
+    compile 'com.github.stephanenicolas.toothpick:smoothie:1.0.6'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.6'
+    testCompile 'com.github.stephanenicolas.toothpick:toothpick-testing:1.0.6'
 
     debugCompile 'com.facebook.stetho:stetho:1.4.2'
     debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
