@@ -3,22 +3,32 @@ package pl.misztal.template.di.module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import pl.misztal.template.BuildConfig;
-import pl.misztal.template.di.module.provider.RestServiceProvider;
 import pl.misztal.template.model.api.RestService;
-import toothpick.config.Module;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NetworkModule extends Module {
+@Module
+public class NetworkModule {
 
-    public NetworkModule() {
-        bind(Gson.class).toInstance(provideGson());
-        bind(OkHttpClient.class).toInstance(provideOkHttpClient());
-        bind(RestService.class).toProvider(RestServiceProvider.class);
+    @Provides
+    RestService provideRestService(OkHttpClient client, Gson gson) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.ENDPOINT)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(RestService.class);
     }
 
-
+    @Provides
     OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
@@ -34,9 +44,10 @@ public class NetworkModule extends Module {
         return builder.build();
     }
 
+    @Provides
     Gson provideGson() {
         GsonBuilder builder = new GsonBuilder();
-        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"); // TODO: 10.06.2017 check date format
 
         return builder.create();
     }

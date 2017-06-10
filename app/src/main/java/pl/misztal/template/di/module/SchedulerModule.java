@@ -1,18 +1,35 @@
 package pl.misztal.template.di.module;
 
+import javax.inject.Named;
+
+import dagger.Module;
+import dagger.Provides;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import pl.misztal.template.di.annotation.ComputationThread;
-import pl.misztal.template.di.annotation.IOThread;
-import pl.misztal.template.di.annotation.MainThread;
-import toothpick.config.Module;
 
-public class SchedulerModule extends Module {
+@Module
+public class SchedulerModule {
 
-    public SchedulerModule() {
-        bind(Scheduler.class).withName(MainThread.class).toInstance(AndroidSchedulers.mainThread());
-        bind(Scheduler.class).withName(IOThread.class).toInstance(Schedulers.io());
-        bind(Scheduler.class).withName(ComputationThread.class).toInstance(Schedulers.computation());
+    public static final String MAIN_THREAD_SCHEDULER = "MAIN_THREAD_SCHEDULER";
+    public static final String IO_SCHEDULER = "IO_SCHEDULER";
+    public static final String COMPUTATION_SCHEDULER = "COMPUTATION_SCHEDULER";
+
+    @Provides
+    @Named(MAIN_THREAD_SCHEDULER)
+    Scheduler provideMainThreadScheduler() {
+        return AndroidSchedulers.mainThread();
+    }
+
+    @Provides
+    @Named(IO_SCHEDULER)
+    Scheduler provideIoScheduler() {
+        return Schedulers.io();
+    }
+
+    @Provides
+    @Named(COMPUTATION_SCHEDULER)
+    Scheduler provideComputationScheduler() {
+        return Schedulers.computation();
     }
 }

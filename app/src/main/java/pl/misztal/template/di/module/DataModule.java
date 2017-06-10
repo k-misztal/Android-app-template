@@ -1,12 +1,17 @@
 package pl.misztal.template.di.module;
 
+import dagger.Module;
+import dagger.Provides;
 import pl.misztal.template.model.DataManager;
-import toothpick.config.Module;
+import pl.misztal.template.model.api.RestService;
+import pl.misztal.template.model.database.DatabaseFacade;
 
-public class DataModule extends Module {
+@Module
+public class DataModule {
 
-    public DataModule() {
-        bind(DataManager.class).to(DataManager.class);
+    @Provides
+    DataManager provideDataManager(RestService restService, DatabaseFacade databaseFacade) {
+        return new DataManager(databaseFacade, restService);
     }
-    
+
 }
