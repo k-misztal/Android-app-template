@@ -1,7 +1,12 @@
 package pl.misztal.template.ui.base;
 
-import com.hannesdorfmann.mosby.mvp.MvpView;
+/**
+ * Empty presenter.
+ */
+public class DefaultPresenter extends BasePresenter<BaseView, ViewState> {
 
-public class DefaultPresenter<V extends MvpView> extends BasePresenter<V> {
+    @Override
+    protected void bindIntents() {
 
+    }
 }

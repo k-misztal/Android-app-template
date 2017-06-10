@@ -4,33 +4,24 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.hannesdorfmann.mosby.mvp.MvpActivity;
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.hannesdorfmann.mosby3.mvi.MviActivity;
 
+import pl.misztal.template.App;
 import pl.misztal.template.ExceptionHandler;
-import pl.misztal.template.di.scope.ActivitySingleton;
-import toothpick.Scope;
-import toothpick.Toothpick;
-import toothpick.smoothie.module.SmoothieSupportActivityModule;
+import pl.misztal.template.di.component.ActivityComponent;
+import pl.misztal.template.di.component.DaggerActivityComponent;
 
-public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>> extends MvpActivity<V, P> {
+public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V, ?>> extends MviActivity<V, P> {
     ProgressDialog progressDialog;
 
     protected ExceptionHandler exceptionHandler;
-    protected Scope scope;
+    ActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initializeInjector();
         super.onCreate(savedInstanceState);
-        inject();
-    }
-
-    @Override
-    protected void onDestroy() {
-        dismissProgressDialog();
-        Toothpick.closeScope(this);
-        super.onDestroy();
+        inject(component);
     }
 
     @Override
@@ -41,14 +32,14 @@ public abstract class BaseActivity<V extends MvpView, P extends BasePresenter<V>
             super.onBackPressed();
     }
 
-    protected void inject() {
-        Toothpick.inject(this, scope);
+    protected void inject(ActivityComponent component) {
+        //override to inject
     }
 
     private void initializeInjector() {
-        scope = Toothpick.openScopes(getApplication(), this);
-        scope.installModules(new SmoothieSupportActivityModule(this));
-        scope.bindScopeAnnotation(ActivitySingleton.class);
+        component = DaggerActivityComponent.builder()
+                .appComponent(App.component())
+                .build();
     }
 
     public void showProgressDialog(int titleRes, int messageRes) {

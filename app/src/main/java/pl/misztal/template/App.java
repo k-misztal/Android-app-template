@@ -4,21 +4,14 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import pl.misztal.template.di.module.DataModule;
-import pl.misztal.template.di.module.NetworkModule;
-import pl.misztal.template.di.module.SchedulerModule;
+import pl.misztal.template.di.component.AppComponent;
+import pl.misztal.template.di.component.DaggerAppComponent;
 import timber.log.Timber;
-import toothpick.Scope;
-import toothpick.Toothpick;
-import toothpick.configuration.Configuration;
-import toothpick.registries.FactoryRegistryLocator;
-import toothpick.registries.MemberInjectorRegistryLocator;
-import toothpick.smoothie.module.SmoothieApplicationModule;
 
 public class App extends Application {
 
     private static App app;
-    private Scope scope;
+    private static AppComponent component;
 
     @Override
     public void onCreate() {
@@ -38,13 +31,7 @@ public class App extends Application {
     }
 
     private void initializeToothpick() {
-        Toothpick.setConfiguration(Configuration.forProduction().disableReflection());
-        FactoryRegistryLocator.setRootRegistry(new pl.misztal.template.FactoryRegistry());
-        MemberInjectorRegistryLocator.setRootRegistry(new pl.misztal.template.MemberInjectorRegistry());
-
-        scope = Toothpick.openScope(this);
-        scope.installModules(new SmoothieApplicationModule(this),
-                new NetworkModule(), new DataModule(), new SchedulerModule());
+        component = DaggerAppComponent.create();
     }
 
     private void initializeTimber() {
@@ -55,5 +42,9 @@ public class App extends Application {
 
     public static App get() {
         return app;
+    }
+
+    public static AppComponent component() {
+        return component;
     }
 }

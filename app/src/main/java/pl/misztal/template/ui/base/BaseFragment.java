@@ -1,24 +1,24 @@
 package pl.misztal.template.ui.base;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
-import com.hannesdorfmann.mosby.mvp.MvpFragment;
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.hannesdorfmann.mosby3.mvi.MviFragment;
 
 import butterknife.Unbinder;
-import pl.misztal.template.di.scope.FragmentSingleton;
-import toothpick.Scope;
-import toothpick.Toothpick;
+import pl.misztal.template.di.component.DaggerFragmentComponent;
+import pl.misztal.template.di.component.FragmentComponent;
 
-public abstract class BaseFragment<V extends MvpView, P extends BasePresenter<V>> extends MvpFragment<V, P> {
-    private Scope scope;
+public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V, ?>> extends MviFragment<V, P> {
+
+    private FragmentComponent component;
     protected Unbinder unbinder;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        initToothpick();
-        inject();
+        initInjector();
+        inject(component);
     }
 
     @Override
@@ -30,13 +30,22 @@ public abstract class BaseFragment<V extends MvpView, P extends BasePresenter<V>
         super.onDestroyView();
     }
 
-    protected void inject() {
-        Toothpick.inject(this, scope);
+    protected void inject(@NonNull FragmentComponent component) {
+        //override to inject
     }
 
-    private void initToothpick() {
-        scope = Toothpick.openScopes(getActivity().getApplication(), this);
-        scope.bindScopeAnnotation(FragmentSingleton.class);
+    private void initInjector() {
+        component = DaggerFragmentComponent.builder()
+                .activityComponent(getBaseActivity().component)
+                .build();
+    }
+
+    protected BaseActivity<?, ?> getBaseActivity() {
+        if (getActivity() instanceof BaseActivity) {
+            return ((BaseActivity) getActivity());
+        } else {
+            throw new IllegalStateException("All activities in this app has to extend BaseActivity");
+        }
     }
 
     public void showError(Throwable e, boolean pullToRefresh) {
